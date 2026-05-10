@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ميلاد نرجوسة  ❤️</title>
+
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+
+    body {
+        background: radial-gradient(circle at center, #2d1b4d 0%, #1a1a2e 100%);
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        overflow: hidden;
+        color: white;
+        position: relative;
+    }
+
+    .container {
+        text-align: center;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+    }
+
+    button {
+        padding: 15px 40px;
+        font-size: 22px;
+        border: none;
+        border-radius: 50px;
+        background: #ff4d6d;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5);
+        transition: 0.3s;
+        display: block;
+    }
+
+    button:hover { transform: scale(1.1); background: #ff758c; }
+
+    #textContainer {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1.8;
+        text-shadow: 2px 2px 15px rgba(0,0,0,0.5);
+        min-height: 100px;
+    }
+
+    #cakeSection {
+        display: none;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .profile-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 5px solid #ff4d6d;
+        object-fit: cover;
+        margin-bottom: 20px;
+        box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+    }
+
+    .cake { font-size: 80px; filter: drop-shadow(0 0 15px gold); }
+    .wishes { font-size: 35px; margin-top: 10px; text-shadow: 0 0 10px #ff4d6d; }
+
+    .particle {
+        position: absolute;
+        bottom: -50px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+        animation: floatUp 6s linear forwards, sideSway 3s ease-in-out infinite;
+    }
+
+    @keyframes floatUp {
+        0% { bottom: -50px; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { bottom: 110vh; opacity: 0; }
+    }
+
+    @keyframes sideSway {
+        0%, 100% { margin-left: 0px; }
+        50% { margin-left: 50px; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    #surpriseBtn { display: none; margin-top: 20px; }
+</style>
+</head>
+
+<body>
+
+    <!-- ملفات الصوت -->
+    <audio id="audio1">
+      <source src="mz2.mpeg" type="audio/mpeg">
+    </audio>
+
+    <audio id="audio2">
+      <source src="mz.mpeg" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <div id="initialStart">
+            <button onclick="initiateExperience()">اضغطي هنا نرجس ❤️</button>
+        </div>
+
+        <div id="textContainer"></div>
+
+        <button id="surpriseBtn" onclick="showCake()">أكو بعد مفاجأة.. اضغطي هنا 🎂</button>
+
+        <div id="cakeSection">
+            <img src="N2.jpeg" alt="نرجس " class="profile-img">
+            <div class="cake">🎂</div>
+            <div class="wishes">كل عام وأنتي بألف خير يا حلوة ❤️</div>
+            <div class="personal-msg">
+                <p>اليوم مو بس عيد ميلادج..</p>
+                <p>اليوم هو عيدنا بوجودج ويانا  </p>
+            </div>
+        </div>
+    </div>
+
+<script>
+const messages = [
+   "نرجس ... يااغلى اخت",
+   "صح انتي اكثر وحدة مزعجة بالبيت بسس... ",
+   "والله البيت بدونج ما يسوه فلس ",
+   "يا حظي بيج وبالسنين اللي كبرنا بيها سوة  ",
+   "انتي مو بس اختي , انتي قطعة من قلبي والروح الي تحلي ايامي",
+   "كل عام وانتي بمليون خير يا اغلى شخص بكوني ",
+   "ان شاء الله اشوفج بأعلى المراتب"
+];
+let msgIndex = 0;
+
+function initiateExperience() {
+    // تشغيل الأغنية الأولى (mz2.mpeg)
+    document.getElementById("audio1").play().catch(e => console.log("خطأ في تشغيل الصوت 1"));
+
+    document.getElementById('initialStart').style.display = 'none';
+    spawnParticles('❤️'); 
+    showNextMessage();
+}
+
+function typeWriter(text, i, callback) {
+    const textElem = document.getElementById("textContainer");
+    if (i < text.length) {
+        textElem.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(text, i + 1, callback), 50);
+    } else {
+        setTimeout(callback, 2000);
+    }
+}
+
+function showNextMessage() {
+    const textElem = document.getElementById("textContainer");
+    if (msgIndex < messages.length) {
+        textElem.innerHTML = "";
+        typeWriter(messages[msgIndex], 0, () => {
+            msgIndex++;
+            showNextMessage();
+        });
+    } else {
+        textElem.style.display = 'none';
+        document.getElementById('surpriseBtn').style.display = 'block';
+    }
+}
+
+function showCake() {
+    // إيقاف الأغنية الأولى وتشغيل الثانية (mz.mpeg)
+    document.getElementById("audio1").pause();
+    document.getElementById("audio2").play().catch(e => console.log("خطأ في تشغيل الصوت 2"));
+
+    document.getElementById('surpriseBtn').style.display = 'none';
+    document.getElementById('cakeSection').style.display = 'block';
+    spawnParticles('🎉', '✨', '🌸', '❤️');
+}
+
+function spawnParticles(...types) {
+    setInterval(() => {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.innerHTML = types[Math.floor(Math.random() * types.length)];
+        
+        const startPos = Math.random() * 100;
+        const size = Math.random() * 20 + 15;
+        const duration = Math.random() * 3 + 4;
+
+        p.style.left = startPos + "vw";
+        p.style.fontSize = size + "px";
+        p.style.animationDuration = duration + "s, 3s";
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 7000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
